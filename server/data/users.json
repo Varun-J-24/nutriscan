@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "c7a2abc9-d58b-4773-94ac-837c17bda8b2",
+      "email": "demo.user+1@example.com",
+      "name": "Demo User",
+      "passwordHash": "$2a$12$o4iZBks5wFaYZjdO2FugZuI.0WCLl9UPgOrZONJ0xiG9kkt0cYjl.",
+      "createdAt": "2026-04-21T16:32:47.262Z"
+    },
+    {
+      "id": "204b360b-c158-4a8a-851d-75199bc48a2f",
+      "email": "demo.user+2@example.com",
+      "name": "Demo User",
+      "passwordHash": "$2a$12$Zp.n1V2Gy.0QraxoRA5TN.bETvPgeLRqLBeiEXwFneRfn3X7FlalS",
+      "createdAt": "2026-04-21T16:32:53.147Z"
+    },
+    {
+      "id": "f2790a3b-b480-4d21-92da-9eb15480d8ff",
+      "email": "varunjaiswal946@gmail.com",
+      "name": "Varun Jaiswal",
+      "passwordHash": "$2a$12$55ChksIPeVSsaSXmrHfE6.ZZgNSpFE20GH.I2eSLpIHFuCtq97lE.",
+      "createdAt": "2026-04-21T17:00:11.124Z"
+    }
+  ]
+}
