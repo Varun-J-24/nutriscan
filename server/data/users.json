@@ -20,6 +20,20 @@
       "name": "Varun Jaiswal",
       "passwordHash": "$2a$12$55ChksIPeVSsaSXmrHfE6.ZZgNSpFE20GH.I2eSLpIHFuCtq97lE.",
       "createdAt": "2026-04-21T17:00:11.124Z"
+    },
+    {
+      "id": "0687735a-fa70-47e6-a0d7-1f0df02aebf9",
+      "email": "shrisha.lohia24@gmail.com",
+      "name": "Shrisha",
+      "passwordHash": "$2a$12$lBFIkiMDsLK3of3XFm/JievzOJ72lej96UOXDgmYVpzLym.9VEMCC",
+      "createdAt": "2026-04-21T21:06:42.710Z"
+    },
+    {
+      "id": "535e95bc-9088-47ef-958f-ed657ab08201",
+      "email": "test@example.com",
+      "name": "Tester",
+      "passwordHash": "$2a$12$ri73Lrt7huRdzlz7XV0W8eujJ.RvDeiNNRMM.yCwfkQyMNtvxXd.u",
+      "createdAt": "2026-04-21T22:40:39.158Z"
     }
   ]
 }
