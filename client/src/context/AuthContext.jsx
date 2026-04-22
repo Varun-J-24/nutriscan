@@ -27,12 +27,12 @@ const isPlaceholder = (value = '') => {
 };
 
 const rawFirebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyCRxLffowS1liH6xB9MccZlM_PfTtb8A5k",
+  authDomain: "nutriscan-26cfc.firebaseapp.com",
+  projectId: "nutriscan-26cfc",
+  storageBucket: "nutriscan-26cfc.firebasestorage.app",
+  messagingSenderId: "788390827982",
+  appId: "1:788390827982:web:3a8010913d38d876d6fd9f"
 };
 
 const requiredFirebaseFields = ['apiKey', 'authDomain', 'projectId', 'appId'];
