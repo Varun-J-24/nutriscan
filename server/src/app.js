@@ -60,13 +60,7 @@ export const createApp = () => {
 
   app.use(
     cors({
-      origin(origin, callback) {
-        if (isAllowedOrigin(origin)) {
-          callback(null, true);
-          return;
-        }
-        callback(null, false);
-      },
+      origin: true,
       credentials: true
     })
   );
