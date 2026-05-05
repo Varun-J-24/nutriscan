@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://nutriscan-st2h.onrender.com/:path*"
+      "destination": "https://nutriscan-st2h.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",

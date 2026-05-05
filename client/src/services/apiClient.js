@@ -1,10 +1,11 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000/api';
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
 
 export const createApiClient = (getIdToken) => {
   const request = async (path, options = {}) => {
     const token = await getIdToken();
 
-    const response = await fetch(`${API_BASE_URL}${path}`, {
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    const response = await fetch(`${API_BASE_URL}${normalizedPath}`, {
       ...options,
       headers: {
         'Content-Type': 'application/json',

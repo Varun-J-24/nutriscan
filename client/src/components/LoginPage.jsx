@@ -18,6 +18,12 @@ const features = [
   }
 ];
 
+const featurePills = [
+  { background: 'linear-gradient(135deg, rgba(255,77,141,0.18), rgba(255,159,28,0.18))', color: '#a21857' },
+  { background: 'linear-gradient(135deg, rgba(255,159,28,0.20), rgba(32,199,122,0.16))', color: '#9a4d00' },
+  { background: 'linear-gradient(135deg, rgba(32,199,122,0.18), rgba(90,124,255,0.16))', color: '#0d8b53' }
+];
+
 export default function LoginPage() {
   const { loginWithGoogle, loginLocal, registerLocal, authError } = useAuth();
 
@@ -62,27 +68,33 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen px-4 py-8 md:px-8 md:py-10">
-      <div className="mx-auto grid w-full max-w-7xl overflow-hidden rounded-[30px] soft-card md:grid-cols-2">
+      <div className="mx-auto grid w-full max-w-7xl overflow-hidden rounded-[30px] brand-panel md:grid-cols-2">
         <section className="relative p-7 md:p-12">
-          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-r from-emerald-50 via-lime-50 to-emerald-100/70" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-r from-[#ffe0ea] via-[#fff1c9] to-[#e1fff0]/90" />
           <div className="relative">
             <div className="flex items-center">
               <img
                 src={LOGO_SRC}
                 alt="NutriScan logo"
-                className="h-20 w-auto rounded-2xl border border-emerald-100 bg-white p-1 shadow-sm"
+                className="h-20 w-auto rounded-2xl border border-[color:var(--border)] bg-white p-1 shadow-sm"
               />
             </div>
 
             <div className="mt-10 space-y-6">
-              {features.map((feature) => (
+              {features.map((feature, index) => (
                 <article key={feature.title} className="flex gap-3">
-                  <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+                  <div
+                    className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold shadow-sm"
+                    style={{
+                      background: featurePills[index].background,
+                      color: featurePills[index].color
+                    }}
+                  >
                     ✓
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-800">{feature.title}</h3>
-                    <p className="mt-1 text-sm text-slate-500">{feature.description}</p>
+                    <h3 className="text-sm font-semibold" style={{ color: 'var(--ink)' }}>{feature.title}</h3>
+                    <p className="mt-1 text-sm" style={{ color: 'var(--muted)' }}>{feature.description}</p>
                   </div>
                 </article>
               ))}
@@ -90,34 +102,38 @@ export default function LoginPage() {
           </div>
         </section>
 
-        <section className="flex items-center justify-center bg-gradient-to-b from-white to-slate-50 p-7 md:p-12">
-          <div className="w-full max-w-sm rounded-3xl border border-slate-200 bg-white p-8 shadow-panel">
-            <h1 className="text-center text-2xl font-semibold text-slate-900">Welcome to NutriScan</h1>
-            <p className="mt-2 text-center text-sm text-slate-500">Login to continue</p>
+        <section className="flex items-center justify-center bg-gradient-to-b from-[#fff8fb] via-[#fff5e9] to-[#eefdf7] p-7 md:p-12">
+          <div className="w-full max-w-sm rounded-3xl border p-8 shadow-panel brand-panel" style={{ borderColor: 'var(--border)' }}>
+            <h1 className="text-center text-2xl font-semibold" style={{ color: 'var(--ink)' }}>Welcome to NutriScan</h1>
+            <p className="mt-2 text-center text-sm" style={{ color: 'var(--muted)' }}>Login to continue</p>
 
             <button
               type="button"
               onClick={handleGoogleLogin}
               disabled={loading || Boolean(authError)}
-              className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white py-3 text-sm font-medium text-slate-800 transition hover:bg-slate-50 disabled:opacity-60"
+              className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl border py-3 text-sm font-medium transition disabled:opacity-60"
+              style={{ borderColor: 'rgba(255,255,255,0.6)', background: 'linear-gradient(135deg, rgba(255,77,141,0.14), rgba(255,159,28,0.16))', color: 'var(--ink)' }}
             >
               <span>🔐</span>
               <span>{loading ? 'Signing in...' : 'Continue with Google'}</span>
             </button>
 
             {authError ? (
-              <p className="mt-2 text-xs text-amber-700">{authError}</p>
+              <p className="mt-2 text-xs" style={{ color: 'var(--amber)' }}>{authError}</p>
             ) : null}
 
-            <p className="my-4 text-center text-xs uppercase tracking-[0.18em] text-slate-400">or</p>
+            <p className="my-4 text-center text-xs uppercase tracking-[0.18em]" style={{ color: 'var(--muted)' }}>or</p>
 
-            <div className="mb-3 grid grid-cols-2 rounded-xl bg-slate-100 p-1">
+            <div className="mb-3 grid grid-cols-2 rounded-xl p-1" style={{ background: 'linear-gradient(135deg, rgba(255,77,141,0.08), rgba(255,159,28,0.08))' }}>
               <button
                 type="button"
                 onClick={() => setLocalMode('login')}
                 className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
-                  localMode === 'login' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'
+                  localMode === 'login' ? 'bg-white shadow-sm' : ''
                 }`}
+                style={{
+                  color: localMode === 'login' ? 'var(--ink)' : 'var(--muted)'
+                }}
               >
                 Local Login
               </button>
@@ -125,8 +141,11 @@ export default function LoginPage() {
                 type="button"
                 onClick={() => setLocalMode('register')}
                 className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
-                  localMode === 'register' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500'
+                  localMode === 'register' ? 'bg-white shadow-sm' : ''
                 }`}
+                style={{
+                  color: localMode === 'register' ? 'var(--ink)' : 'var(--muted)'
+                }}
               >
                 Register
               </button>
@@ -139,34 +158,34 @@ export default function LoginPage() {
                   value={form.name}
                   onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
                   placeholder="Full name"
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-emerald-300 focus:outline-none"
+                  className="brand-input w-full rounded-xl px-3 py-2.5 text-sm placeholder:text-[color:var(--muted)]"
                   required
                 />
               ) : null}
 
-              <input
-                type="email"
-                value={form.email}
-                onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
-                placeholder="Email"
-                className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-emerald-300 focus:outline-none"
-                required
-              />
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
+                  placeholder="Email"
+                  className="brand-input w-full rounded-xl px-3 py-2.5 text-sm placeholder:text-[color:var(--muted)]"
+                  required
+                />
 
-              <input
-                type="password"
-                value={form.password}
-                onChange={(event) => setForm((prev) => ({ ...prev, password: event.target.value }))}
-                placeholder="Password"
-                className="w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-emerald-300 focus:outline-none"
-                minLength={8}
-                required
-              />
+                <input
+                  type="password"
+                  value={form.password}
+                  onChange={(event) => setForm((prev) => ({ ...prev, password: event.target.value }))}
+                  placeholder="Password"
+                  className="brand-input w-full rounded-xl px-3 py-2.5 text-sm placeholder:text-[color:var(--muted)]"
+                  minLength={8}
+                  required
+                />
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-xl bg-slate-900 py-3 text-sm font-medium text-white transition hover:bg-slate-800 disabled:opacity-60"
+                className="brand-primary w-full rounded-xl py-3 text-sm font-medium transition disabled:opacity-60"
               >
                 {loading
                   ? 'Please wait...'
@@ -176,9 +195,9 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
+            {error ? <p className="mt-4 text-sm" style={{ color: 'var(--danger)' }}>{error}</p> : null}
 
-            <p className="mt-7 text-center text-xs text-slate-400">
+            <p className="mt-7 text-center text-xs" style={{ color: 'var(--muted)' }}>
               By continuing, you agree to our Terms and Privacy Policy.
             </p>
           </div>

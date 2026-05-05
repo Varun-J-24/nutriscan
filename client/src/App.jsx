@@ -1,8 +1,13 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import LoginPage from './components/LoginPage.jsx';
-import DashboardPage from './components/DashboardPage.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { useAuth } from './context/AuthContext.jsx';
+import AppShell from './components/layout/AppShell.jsx';
+import HomePage from './pages/HomePage.jsx';
+import ScannerPage from './pages/ScannerPage.jsx';
+import HistoryPage from './pages/HistoryPage.jsx';
+import AlertsPage from './pages/AlertsPage.jsx';
+import SettingsPage from './pages/SettingsPage.jsx';
 
 export default function App() {
   const { user, loading } = useAuth();
@@ -10,7 +15,7 @@ export default function App() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <div className="rounded-full border-4 border-slate-200 border-t-slate-700 h-12 w-12 animate-spin" />
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-[color:var(--border)] border-t-[color:var(--teal)]" />
       </div>
     );
   }
@@ -22,10 +27,16 @@ export default function App() {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <DashboardPage />
+            <AppShell />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route index element={<HomePage />} />
+        <Route path="scanner" element={<ScannerPage />} />
+        <Route path="history" element={<HistoryPage />} />
+        <Route path="alerts" element={<AlertsPage />} />
+        <Route path="settings" element={<SettingsPage />} />
+      </Route>
       <Route path="*" element={<Navigate to={user ? '/dashboard' : '/'} replace />} />
     </Routes>
   );

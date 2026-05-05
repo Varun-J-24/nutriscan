@@ -4,19 +4,33 @@
 
 :root {
   color-scheme: light;
-  --brand-green: #25a55f;
-  --brand-green-soft: #e8f7ef;
-  --card-border: #e5e7eb;
+  --bg-cream: #fff5ea;
+  --surface: #fffdfb;
+  --surface-2: #fff0f4;
+  --ink: #251338;
+  --muted: #7a6485;
+  --border: #f0d6c8;
+  --teal: #ff4d8d;
+  --teal-soft: #ffe0ea;
+  --green: #20c77a;
+  --green-soft: #e6fff1;
+  --amber: #ff9f1c;
+  --amber-soft: #fff0cc;
+  --danger: #ff5d5d;
+  --danger-soft: #ffe2e2;
 }
 
 body {
-  @apply text-slate-900 antialiased;
+  @apply antialiased;
+  color: var(--ink);
   font-family: "SF Pro Display", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 8% 4%, rgba(220, 252, 231, 0.7), transparent 32%),
-    radial-gradient(circle at 100% 0%, rgba(240, 253, 244, 0.6), transparent 35%),
-    linear-gradient(180deg, #f8faf9 0%, #f6f8fb 100%);
+    radial-gradient(circle at 10% 10%, rgba(255, 77, 141, 0.22), transparent 20%),
+    radial-gradient(circle at 90% 8%, rgba(255, 159, 28, 0.26), transparent 22%),
+    radial-gradient(circle at 10% 92%, rgba(32, 199, 122, 0.18), transparent 22%),
+    radial-gradient(circle at 86% 88%, rgba(90, 124, 255, 0.16), transparent 24%),
+    linear-gradient(135deg, #fff7ef 0%, #fff1f8 36%, #f4fff7 68%, #fff9ea 100%);
 }
 
 #root {
@@ -24,13 +38,68 @@ body {
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.86);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(8px);
 }
 
 .soft-card {
-  background: white;
-  border: 1px solid var(--card-border);
-  box-shadow: 0 8px 30px -18px rgba(15, 23, 42, 0.22);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, var(--surface-2)), var(--surface));
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 40px -24px rgba(37, 19, 56, 0.34);
+}
+
+.brand-panel {
+  background:
+    radial-gradient(circle at 8% 8%, rgba(255, 77, 141, 0.16), transparent 18%),
+    radial-gradient(circle at 88% 10%, rgba(255, 159, 28, 0.18), transparent 18%),
+    radial-gradient(circle at 84% 88%, rgba(32, 199, 122, 0.12), transparent 20%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 248, 251, 0.94));
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 46px -26px rgba(37, 19, 56, 0.38);
+}
+
+.brand-primary {
+  background: linear-gradient(135deg, #ff4d8d 0%, #ff9f1c 100%);
+  color: white;
+  box-shadow: 0 14px 28px -16px rgba(255, 77, 141, 0.72);
+}
+
+.brand-primary:hover {
+  background: linear-gradient(135deg, #ff3e82 0%, #ff8d00 100%);
+}
+
+.brand-secondary {
+  background: linear-gradient(135deg, rgba(255, 159, 28, 0.18), rgba(255, 77, 141, 0.12));
+  color: var(--ink);
+  border: 1px solid color-mix(in srgb, var(--amber) 34%, white);
+}
+
+.brand-soft {
+  background: linear-gradient(135deg, var(--green-soft), color-mix(in srgb, var(--surface) 75%, var(--green-soft)));
+  color: #0d8b53;
+}
+
+.brand-amber {
+  background: linear-gradient(135deg, #fff3cc, #ffe3a7);
+  color: #9a4d00;
+  border: 1px solid color-mix(in srgb, var(--amber) 45%, white);
+}
+
+.brand-danger {
+  background: linear-gradient(135deg, #ffe0e0, #ffc6cc);
+  color: #c11f47;
+  border: 1px solid color-mix(in srgb, var(--danger) 30%, white);
+}
+
+.brand-input {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  color: var(--ink);
+}
+
+.brand-input:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--teal) 42%, white);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 20%, transparent);
 }
