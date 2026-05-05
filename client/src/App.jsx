@@ -8,16 +8,13 @@ import ScannerPage from './pages/ScannerPage.jsx';
 import HistoryPage from './pages/HistoryPage.jsx';
 import AlertsPage from './pages/AlertsPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
+import Preloader from './components/Preloader.jsx';
 
 export default function App() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-[color:var(--border)] border-t-[color:var(--teal)]" />
-      </div>
-    );
+    return <Preloader />;
   }
 
   return (
