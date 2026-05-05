@@ -19,9 +19,9 @@ const features = [
 ];
 
 const featurePills = [
-  { background: 'linear-gradient(135deg, rgba(255,77,141,0.18), rgba(255,159,28,0.18))', color: '#a21857' },
-  { background: 'linear-gradient(135deg, rgba(255,159,28,0.20), rgba(32,199,122,0.16))', color: '#9a4d00' },
-  { background: 'linear-gradient(135deg, rgba(32,199,122,0.18), rgba(90,124,255,0.16))', color: '#0d8b53' }
+  { background: 'linear-gradient(135deg, rgba(11,31,77,0.20), rgba(25,164,99,0.20))', color: '#0b1f4d' },
+  { background: 'linear-gradient(135deg, rgba(25,164,99,0.22), rgba(47,143,190,0.18))', color: '#0f6b45' },
+  { background: 'linear-gradient(135deg, rgba(11,31,77,0.16), rgba(47,143,190,0.20))', color: '#1b4a7a' }
 ];
 
 export default function LoginPage() {
@@ -70,13 +70,13 @@ export default function LoginPage() {
     <div className="min-h-screen px-4 py-8 md:px-8 md:py-10">
       <div className="mx-auto grid w-full max-w-7xl overflow-hidden rounded-[30px] brand-panel md:grid-cols-2">
         <section className="relative p-7 md:p-12">
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-r from-[#ffe0ea] via-[#fff1c9] to-[#e1fff0]/90" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-r from-[#dde7ff] via-[#dff6ee] to-[#e3f2ff]/90" />
           <div className="relative">
             <div className="flex items-center">
               <img
                 src={LOGO_SRC}
                 alt="NutriScan logo"
-                className="h-20 w-auto rounded-2xl border border-[color:var(--border)] bg-white p-1 shadow-sm"
+                className="h-auto w-full max-w-[320px] rounded-2xl border border-[color:var(--border)] bg-white p-1 object-contain shadow-sm"
               />
             </div>
 
@@ -102,7 +102,7 @@ export default function LoginPage() {
           </div>
         </section>
 
-        <section className="flex items-center justify-center bg-gradient-to-b from-[#fff8fb] via-[#fff5e9] to-[#eefdf7] p-7 md:p-12">
+        <section className="flex items-center justify-center bg-gradient-to-b from-[#eef5ff] via-[#ecf8f2] to-[#edf7ff] p-7 md:p-12">
           <div className="w-full max-w-sm rounded-3xl border p-8 shadow-panel brand-panel" style={{ borderColor: 'var(--border)' }}>
             <h1 className="text-center text-2xl font-semibold" style={{ color: 'var(--ink)' }}>Welcome to NutriScan</h1>
             <p className="mt-2 text-center text-sm" style={{ color: 'var(--muted)' }}>Login to continue</p>
@@ -112,7 +112,7 @@ export default function LoginPage() {
               onClick={handleGoogleLogin}
               disabled={loading || Boolean(authError)}
               className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl border py-3 text-sm font-medium transition disabled:opacity-60"
-              style={{ borderColor: 'rgba(255,255,255,0.6)', background: 'linear-gradient(135deg, rgba(255,77,141,0.14), rgba(255,159,28,0.16))', color: 'var(--ink)' }}
+              style={{ borderColor: 'rgba(255,255,255,0.7)', background: 'linear-gradient(135deg, rgba(11,31,77,0.14), rgba(25,164,99,0.14))', color: 'var(--ink)' }}
             >
               <span>🔐</span>
               <span>{loading ? 'Signing in...' : 'Continue with Google'}</span>
@@ -124,7 +124,7 @@ export default function LoginPage() {
 
             <p className="my-4 text-center text-xs uppercase tracking-[0.18em]" style={{ color: 'var(--muted)' }}>or</p>
 
-            <div className="mb-3 grid grid-cols-2 rounded-xl p-1" style={{ background: 'linear-gradient(135deg, rgba(255,77,141,0.08), rgba(255,159,28,0.08))' }}>
+            <div className="mb-3 grid grid-cols-2 rounded-xl p-1" style={{ background: 'linear-gradient(135deg, rgba(11,31,77,0.08), rgba(25,164,99,0.08))' }}>
               <button
                 type="button"
                 onClick={() => setLocalMode('login')}

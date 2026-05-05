@@ -1,4 +1,16 @@
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '');
+const resolveApiBaseUrl = () => {
+  const raw = (import.meta.env.VITE_API_BASE_URL || '').trim();
+  const normalized = (raw || '/api').replace(/\/$/, '');
+
+  // Prevent broken production builds when env accidentally points to localhost.
+  if (!import.meta.env.DEV && /localhost|127\.0\.0\.1/i.test(normalized)) {
+    return '/api';
+  }
+
+  return normalized;
+};
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 export const createApiClient = (getIdToken) => {
   const request = async (path, options = {}) => {

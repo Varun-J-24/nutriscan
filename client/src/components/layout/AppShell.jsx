@@ -18,19 +18,14 @@ export default function AppShell() {
     <div className="min-h-screen p-3 md:p-6">
       <div className="mx-auto grid max-w-[1400px] gap-4 lg:grid-cols-[230px,1fr]">
         <aside className="soft-card rounded-2xl p-4 md:p-5">
-          <div className="flex items-center gap-2.5 border-b pb-4" style={{ borderColor: 'var(--border)' }}>
+          <div className="border-b pb-4" style={{ borderColor: 'var(--border)' }}>
             <img
               src={LOGO_SRC}
               alt="NutriScan logo"
-              className="h-10 w-10 rounded-xl border object-cover"
+              className="h-20 w-full rounded-xl border bg-white p-1 object-contain"
               style={{ borderColor: 'var(--border)' }}
             />
-            <div>
-              <p className="text-lg font-semibold" style={{ color: 'var(--ink)' }}>
-                Nutri<span style={{ color: 'var(--teal)' }}>Scan</span>
-              </p>
-              <p className="text-xs" style={{ color: 'var(--muted)' }}>Smart nutrition companion</p>
-            </div>
+            <p className="mt-2 text-xs" style={{ color: 'var(--muted)' }}>Smart nutrition companion</p>
           </div>
 
           <nav className="mt-4 grid gap-1.5">

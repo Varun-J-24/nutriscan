@@ -36,7 +36,7 @@ export default function HomePage() {
 
           <div
             className="relative overflow-hidden rounded-2xl border p-4"
-            style={{ borderColor: 'var(--border)', background: 'linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(255,224,234,0.95) 48%, rgba(225,255,240,0.95) 100%)' }}
+            style={{ borderColor: 'var(--border)', background: 'linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(223,232,255,0.94) 46%, rgba(227,248,237,0.95) 100%)' }}
           >
             <p className="text-sm font-medium" style={{ color: 'var(--ink)' }}>
               Total scans

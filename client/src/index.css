@@ -4,20 +4,20 @@
 
 :root {
   color-scheme: light;
-  --bg-cream: #fff5ea;
-  --surface: #fffdfb;
-  --surface-2: #fff0f4;
-  --ink: #251338;
-  --muted: #7a6485;
-  --border: #f0d6c8;
-  --teal: #ff4d8d;
-  --teal-soft: #ffe0ea;
-  --green: #20c77a;
-  --green-soft: #e6fff1;
-  --amber: #ff9f1c;
-  --amber-soft: #fff0cc;
-  --danger: #ff5d5d;
-  --danger-soft: #ffe2e2;
+  --bg-cream: #edf7f3;
+  --surface: #f8fffc;
+  --surface-2: #eaf6f2;
+  --ink: #0d1b3d;
+  --muted: #4d607d;
+  --border: #c7d9e8;
+  --teal: #0b1f4d;
+  --teal-soft: #dfe8ff;
+  --green: #19a463;
+  --green-soft: #e3f8ed;
+  --amber: #2f8fbe;
+  --amber-soft: #e2f1fa;
+  --danger: #d03b51;
+  --danger-soft: #f8e3e8;
 }
 
 body {
@@ -26,11 +26,10 @@ body {
   font-family: "SF Pro Display", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 10% 10%, rgba(255, 77, 141, 0.22), transparent 20%),
-    radial-gradient(circle at 90% 8%, rgba(255, 159, 28, 0.26), transparent 22%),
-    radial-gradient(circle at 10% 92%, rgba(32, 199, 122, 0.18), transparent 22%),
-    radial-gradient(circle at 86% 88%, rgba(90, 124, 255, 0.16), transparent 24%),
-    linear-gradient(135deg, #fff7ef 0%, #fff1f8 36%, #f4fff7 68%, #fff9ea 100%);
+    radial-gradient(circle at 12% 10%, rgba(11, 31, 77, 0.18), transparent 22%),
+    radial-gradient(circle at 88% 12%, rgba(25, 164, 99, 0.22), transparent 24%),
+    radial-gradient(circle at 14% 88%, rgba(47, 143, 190, 0.14), transparent 24%),
+    linear-gradient(135deg, #ecf7f3 0%, #eef5ff 46%, #f3fbf7 100%);
 }
 
 #root {
@@ -46,33 +45,33 @@ body {
 .soft-card {
   background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, var(--surface-2)), var(--surface));
   border: 1px solid var(--border);
-  box-shadow: 0 16px 40px -24px rgba(37, 19, 56, 0.34);
+  box-shadow: 0 16px 40px -24px rgba(13, 27, 61, 0.26);
 }
 
 .brand-panel {
   background:
-    radial-gradient(circle at 8% 8%, rgba(255, 77, 141, 0.16), transparent 18%),
-    radial-gradient(circle at 88% 10%, rgba(255, 159, 28, 0.18), transparent 18%),
-    radial-gradient(circle at 84% 88%, rgba(32, 199, 122, 0.12), transparent 20%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 248, 251, 0.94));
+    radial-gradient(circle at 10% 10%, rgba(11, 31, 77, 0.14), transparent 20%),
+    radial-gradient(circle at 84% 12%, rgba(25, 164, 99, 0.16), transparent 20%),
+    radial-gradient(circle at 80% 86%, rgba(47, 143, 190, 0.10), transparent 22%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(243, 250, 247, 0.95));
   border: 1px solid var(--border);
-  box-shadow: 0 18px 46px -26px rgba(37, 19, 56, 0.38);
+  box-shadow: 0 18px 46px -26px rgba(13, 27, 61, 0.30);
 }
 
 .brand-primary {
-  background: linear-gradient(135deg, #ff4d8d 0%, #ff9f1c 100%);
+  background: linear-gradient(135deg, #0b1f4d 0%, #19a463 100%);
   color: white;
-  box-shadow: 0 14px 28px -16px rgba(255, 77, 141, 0.72);
+  box-shadow: 0 14px 28px -16px rgba(11, 31, 77, 0.55);
 }
 
 .brand-primary:hover {
-  background: linear-gradient(135deg, #ff3e82 0%, #ff8d00 100%);
+  background: linear-gradient(135deg, #08173a 0%, #158a55 100%);
 }
 
 .brand-secondary {
-  background: linear-gradient(135deg, rgba(255, 159, 28, 0.18), rgba(255, 77, 141, 0.12));
+  background: linear-gradient(135deg, rgba(11, 31, 77, 0.10), rgba(25, 164, 99, 0.12));
   color: var(--ink);
-  border: 1px solid color-mix(in srgb, var(--amber) 34%, white);
+  border: 1px solid color-mix(in srgb, var(--green) 34%, white);
 }
 
 .brand-soft {
@@ -81,9 +80,9 @@ body {
 }
 
 .brand-amber {
-  background: linear-gradient(135deg, #fff3cc, #ffe3a7);
-  color: #9a4d00;
-  border: 1px solid color-mix(in srgb, var(--amber) 45%, white);
+  background: linear-gradient(135deg, #e8f3ff, #dff5ff);
+  color: #1b4a7a;
+  border: 1px solid color-mix(in srgb, var(--amber) 38%, white);
 }
 
 .brand-danger {

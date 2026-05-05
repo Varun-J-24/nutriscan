@@ -132,7 +132,7 @@ export default function ScannerPage() {
   const safeDeg = (riskSummary.safe / riskTotal) * 360;
   const moderateDeg = (riskSummary.moderate / riskTotal) * 360;
   const chartStyle = {
-    background: `conic-gradient(#20c77a 0deg ${safeDeg}deg, #ff9f1c ${safeDeg}deg ${safeDeg + moderateDeg}deg, #ff5d5d ${safeDeg + moderateDeg}deg 360deg)`
+    background: `conic-gradient(#19a463 0deg ${safeDeg}deg, #2f8fbe ${safeDeg}deg ${safeDeg + moderateDeg}deg, #d03b51 ${safeDeg + moderateDeg}deg 360deg)`
   };
 
   return (
@@ -177,7 +177,7 @@ export default function ScannerPage() {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-2xl border p-4" style={{ borderColor: 'var(--border)', background: 'linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(255,224,234,0.95) 48%, rgba(225,255,240,0.95) 100%)' }}>
+          <div className="relative overflow-hidden rounded-2xl border p-4" style={{ borderColor: 'var(--border)', background: 'linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(223,232,255,0.94) 46%, rgba(227,248,237,0.95) 100%)' }}>
             {product?.imageUrl ? (
               <img src={product.imageUrl} alt="Product" className="h-36 w-full rounded-xl object-contain" />
             ) : (
@@ -203,9 +203,9 @@ export default function ScannerPage() {
             <span className="text-xs" style={{ color: 'var(--muted)' }}>Align barcode within frame</span>
           </div>
 
-          <div className="relative overflow-hidden rounded-xl border" style={{ borderColor: 'var(--border)', background: 'linear-gradient(135deg, #2a1141 0%, #20295b 45%, #137a63 100%)' }}>
+          <div className="relative overflow-hidden rounded-xl border" style={{ borderColor: 'var(--border)', background: 'linear-gradient(135deg, #071434 0%, #0b1f4d 46%, #188b57 100%)' }}>
             <video ref={videoRef} autoPlay playsInline muted className="h-[280px] w-full object-cover" />
-            <div className="pointer-events-none absolute left-6 right-6 top-1/2 h-0.5 -translate-y-1/2" style={{ background: 'var(--amber)', boxShadow: '0 0 22px rgba(255,159,28,0.75)' }} />
+            <div className="pointer-events-none absolute left-6 right-6 top-1/2 h-0.5 -translate-y-1/2" style={{ background: 'var(--green)', boxShadow: '0 0 22px rgba(25,164,99,0.72)' }} />
           </div>
         </section>
 

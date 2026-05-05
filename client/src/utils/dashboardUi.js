@@ -13,8 +13,8 @@ export const severityClass = {
 
 export const scoreTone = (score = 0) => {
   if (score >= 80) return 'text-[color:var(--green)] bg-[color:var(--green-soft)] border-[color:var(--border)]';
-  if (score >= 60) return 'text-[#9a4d00] bg-[color:var(--amber-soft)] border-[color:var(--border)]';
-  return 'text-[#c11f47] bg-[color:var(--danger-soft)] border-[color:var(--border)]';
+  if (score >= 60) return 'text-[#1b4a7a] bg-[color:var(--amber-soft)] border-[color:var(--border)]';
+  return 'text-[#a52f43] bg-[color:var(--danger-soft)] border-[color:var(--border)]';
 };
 
 export const formatScanTime = (value) => {
