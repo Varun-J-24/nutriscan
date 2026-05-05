@@ -21,12 +21,12 @@ export default function HomePage() {
               This keeps workflows focused and easier to maintain.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <Link to="/dashboard/scanner" className="brand-primary rounded-lg px-4 py-2 text-sm font-medium">
+              <Link to="/dashboard/scanner" className="brand-primary w-full rounded-lg px-4 py-2 text-center text-sm font-medium sm:w-auto">
                 Open Scanner
               </Link>
               <Link
                 to="/dashboard/history"
-                className="rounded-lg border px-4 py-2 text-sm font-medium"
+                className="w-full rounded-lg border px-4 py-2 text-center text-sm font-medium sm:w-auto"
                 style={{ borderColor: 'var(--border)', color: 'var(--teal)' }}
               >
                 View History

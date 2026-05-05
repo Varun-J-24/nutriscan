@@ -32,6 +32,11 @@ export const createApiClient = (getIdToken) => {
         method: 'POST',
         body: JSON.stringify(body)
       }),
+    analyzeExpiry: (body) =>
+      request('/expiry/analyze', {
+        method: 'POST',
+        body: JSON.stringify(body)
+      }),
     getHistory: () => request('/history'),
     addHistory: (entry) =>
       request('/history', {

@@ -12,7 +12,7 @@ export default function AlertsPage() {
 
   return (
     <section className="soft-card rounded-2xl p-4 md:p-5">
-      <div className="mb-3 flex items-center justify-between">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-lg font-semibold" style={{ color: 'var(--ink)' }}>Expiry Alerts</h3>
         <span className="text-xs" style={{ color: 'var(--muted)' }}>
           {alertRows.length} attention-needed items

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 
-const LOGO_SRC = '/nutriscan-logo.jpg';
+const LOGO_SRC = '/nutriscan-logo.png';
 
 const features = [
   {
@@ -76,7 +76,7 @@ export default function LoginPage() {
               <img
                 src={LOGO_SRC}
                 alt="NutriScan logo"
-                className="h-auto w-full max-w-[320px] rounded-2xl border border-[color:var(--border)] bg-white p-1 object-contain shadow-sm"
+                className="brand-logo-clean h-auto w-full max-w-[320px] object-contain"
               />
             </div>
 

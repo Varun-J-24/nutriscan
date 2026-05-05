@@ -4,6 +4,21 @@ import { detectExpiryFromVideo } from '../services/ocrService.js';
 import { useScanHistory } from '../hooks/useScanHistory.js';
 import { badgeClass, scoreTone, severityClass, statusToProgress } from '../utils/dashboardUi.js';
 
+const defaultExpiryState = {
+  status: 'Unknown',
+  expiryDate: null,
+  daysRemaining: null,
+  confidence: 0,
+  source: 'none',
+  reason: 'No expiry analysis run yet.',
+  riskLevel: 'unknown',
+  freshnessWindowDays: 7,
+  storageAdvice: null,
+  actions: [],
+  extractedCandidates: [],
+  ocrConfidence: null
+};
+
 export default function ScannerPage() {
   const videoRef = useRef(null);
 
@@ -16,7 +31,7 @@ export default function ScannerPage() {
   const [analysis, setAnalysis] = useState(null);
   const [analysisLoading, setAnalysisLoading] = useState(false);
 
-  const [expiry, setExpiry] = useState({ status: 'Unknown', expiryDate: null, daysRemaining: null });
+  const [expiry, setExpiry] = useState(defaultExpiryState);
   const [ocrLoading, setOcrLoading] = useState(false);
   const [ocrError, setOcrError] = useState('');
 
@@ -28,7 +43,7 @@ export default function ScannerPage() {
       setProductLoading(true);
       setProductError('');
       setAnalysis(null);
-      setExpiry({ status: 'Unknown', expiryDate: null, daysRemaining: null });
+      setExpiry(defaultExpiryState);
       setOcrError('');
 
       try {
@@ -60,8 +75,19 @@ export default function ScannerPage() {
     setOcrError('');
 
     try {
-      const response = await detectExpiryFromVideo(videoRef.current);
-      setExpiry(response);
+      const ocrResult = await detectExpiryFromVideo(videoRef.current);
+      const response = await api.analyzeExpiry({
+        ocrText: ocrResult.rawText,
+        product: product
+          ? {
+              productName: product.productName,
+              categories: product.categories || null,
+              expiryInfo: product.expiryInfo || null,
+              storageConditions: product.storageConditions || null
+            }
+          : null
+      });
+      setExpiry({ ...response.expiry, ocrConfidence: ocrResult.ocrConfidence });
     } catch (error) {
       setOcrError(error.message || 'OCR failed.');
     } finally {
@@ -151,7 +177,7 @@ export default function ScannerPage() {
                   setScannerActive((prev) => !prev);
                 }}
                 disabled={!cameraSupported}
-                className="brand-primary rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-60"
+                className="brand-primary w-full rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-60 sm:w-auto"
               >
                 {scannerActive ? 'Stop Scanning' : 'Start Scanning'}
               </button>
@@ -159,12 +185,12 @@ export default function ScannerPage() {
                 type="button"
                 onClick={runOcr}
                 disabled={!scannerActive || ocrLoading}
-                className="rounded-lg border px-4 py-2 text-sm font-medium disabled:opacity-60"
+                className="w-full rounded-lg border px-4 py-2 text-sm font-medium disabled:opacity-60 sm:w-auto"
                 style={{ borderColor: 'var(--border)', color: 'var(--teal)', background: 'var(--surface)' }}
               >
                 {ocrLoading ? 'Reading...' : 'Detect Expiry'}
               </button>
-              <label className="cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium hover:bg-[color:var(--surface-2)]" style={{ borderColor: 'var(--border)', color: 'var(--teal)' }}>
+              <label className="w-full cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium hover:bg-[color:var(--surface-2)] sm:w-auto" style={{ borderColor: 'var(--border)', color: 'var(--teal)' }}>
                 Upload Barcode Image
                 <input
                   type="file"
@@ -204,7 +230,7 @@ export default function ScannerPage() {
           </div>
 
           <div className="relative overflow-hidden rounded-xl border" style={{ borderColor: 'var(--border)', background: 'linear-gradient(135deg, #071434 0%, #0b1f4d 46%, #188b57 100%)' }}>
-            <video ref={videoRef} autoPlay playsInline muted className="h-[280px] w-full object-cover" />
+            <video ref={videoRef} autoPlay playsInline muted className="h-[220px] w-full object-cover sm:h-[280px]" />
             <div className="pointer-events-none absolute left-6 right-6 top-1/2 h-0.5 -translate-y-1/2" style={{ background: 'var(--green)', boxShadow: '0 0 22px rgba(25,164,99,0.72)' }} />
           </div>
         </section>
@@ -224,8 +250,8 @@ export default function ScannerPage() {
 
           {product ? (
             <>
-              <div className="flex items-start gap-3 rounded-xl border p-3" style={{ borderColor: 'var(--border)' }}>
-                <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl" style={{ background: 'var(--surface-2)' }}>
+              <div className="flex flex-col gap-3 rounded-xl border p-3 sm:flex-row sm:items-start" style={{ borderColor: 'var(--border)' }}>
+                <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl sm:h-16 sm:w-16" style={{ background: 'var(--surface-2)' }}>
                   {product.imageUrl ? <img src={product.imageUrl} alt={product.productName} className="h-full w-full object-cover" /> : <span className="text-2xl">Box</span>}
                 </div>
                 <div className="flex-1">
@@ -240,7 +266,7 @@ export default function ScannerPage() {
                     {product.barcode && favoriteSet.has(product.barcode) ? 'Remove Favorite ★' : 'Add Favorite ☆'}
                   </button>
                 </div>
-                <div className={`rounded-xl border px-3 py-2 text-center ${scoreTone(analysis?.healthScore ?? 0)}`}>
+                <div className={`w-fit rounded-xl border px-3 py-2 text-center sm:ml-auto ${scoreTone(analysis?.healthScore ?? 0)}`}>
                   <p className="text-2xl font-semibold leading-none">{analysis?.healthScore ?? '--'}</p>
                   <p className="text-[10px] uppercase tracking-wider">health score</p>
                 </div>
@@ -271,7 +297,7 @@ export default function ScannerPage() {
 
       <section className="soft-card rounded-2xl p-4 md:p-5">
         <h3 className="text-lg font-semibold" style={{ color: 'var(--ink)' }}>Ingredient Safety Breakdown</h3>
-        <div className="mt-4 flex items-center gap-4">
+        <div className="mt-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
           <div className="relative h-28 w-28 rounded-full" style={chartStyle}>
             <div className="absolute inset-3 rounded-full bg-white" />
           </div>
@@ -291,6 +317,53 @@ export default function ScannerPage() {
               style={{ background: 'var(--teal)', left: `${statusToProgress[expiry.status]}%`, borderColor: 'var(--surface)' }}
             />
           </div>
+          <div className="mt-4 grid gap-2 sm:grid-cols-2">
+            <p className="text-xs" style={{ color: 'var(--muted)' }}>
+              Expiry Date: <span style={{ color: 'var(--ink)' }}>{expiry.expiryDate || 'Not detected'}</span>
+            </p>
+            <p className="text-xs" style={{ color: 'var(--muted)' }}>
+              Days Remaining: <span style={{ color: 'var(--ink)' }}>{expiry.daysRemaining ?? 'Unknown'}</span>
+            </p>
+            <p className="text-xs" style={{ color: 'var(--muted)' }}>
+              Confidence: <span style={{ color: 'var(--ink)' }}>{Math.round((expiry.confidence || 0) * 100)}%</span>
+            </p>
+            <p className="text-xs" style={{ color: 'var(--muted)' }}>
+              Source: <span style={{ color: 'var(--ink)' }}>{expiry.source === 'ocr' ? 'OCR label' : expiry.source === 'product_meta' ? 'Product metadata' : 'Not available'}</span>
+            </p>
+            <p className="text-xs sm:col-span-2" style={{ color: 'var(--muted)' }}>
+              Reason: <span style={{ color: 'var(--ink)' }}>{expiry.reason}</span>
+            </p>
+            {expiry.storageAdvice ? (
+              <p className="text-xs sm:col-span-2" style={{ color: 'var(--muted)' }}>
+                Storage Advice: <span style={{ color: 'var(--ink)' }}>{expiry.storageAdvice}</span>
+              </p>
+            ) : null}
+            {expiry.ocrConfidence !== null ? (
+              <p className="text-xs sm:col-span-2" style={{ color: 'var(--muted)' }}>
+                OCR Read Quality: <span style={{ color: 'var(--ink)' }}>{Math.round((expiry.ocrConfidence || 0) * 100)}%</span>
+              </p>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="mt-3 rounded-xl border p-3" style={{ borderColor: 'var(--border)' }}>
+          <p className="text-sm font-semibold" style={{ color: 'var(--ink)' }}>Expiry Recommendations</p>
+          {expiry.actions?.length ? (
+            <ul className="mt-2 space-y-1 text-sm" style={{ color: 'var(--muted)' }}>
+              {expiry.actions.map((action) => (
+                <li key={action}>- {action}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-2 text-sm" style={{ color: 'var(--muted)' }}>
+              Run Detect Expiry to get actionable recommendations.
+            </p>
+          )}
+          {expiry.extractedCandidates?.length ? (
+            <p className="mt-3 text-xs" style={{ color: 'var(--muted)' }}>
+              Candidate dates found: {expiry.extractedCandidates.map((item) => `${item.date} (${Math.round(item.confidence * 100)}%)`).join(', ')}
+            </p>
+          ) : null}
         </div>
       </section>
     </>

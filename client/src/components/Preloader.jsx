@@ -1,14 +1,14 @@
-const LOGO_SRC = '/nutriscan-logo.jpg';
+const LOGO_SRC = '/nutriscan-logo.png';
 
 export default function Preloader() {
   return (
     <div className="preloader-screen flex min-h-screen items-center justify-center px-4">
       <div className="preloader-card relative w-full max-w-md rounded-3xl border p-6 text-center sm:p-8">
-        <div className="mx-auto flex h-28 w-full max-w-[280px] items-center justify-center rounded-2xl border bg-white/90 p-2 shadow-sm sm:h-32">
+        <div className="mx-auto flex h-28 w-full max-w-[280px] items-center justify-center sm:h-32">
           <img
             src={LOGO_SRC}
             alt="NutriScan logo"
-            className="preloader-logo h-full w-full object-contain"
+            className="brand-logo-clean preloader-logo h-full w-full object-contain"
           />
         </div>
 

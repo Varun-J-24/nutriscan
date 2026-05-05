@@ -8,6 +8,7 @@ import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import analysisRoutes from './routes/analysisRoutes.js';
 import historyRoutes from './routes/historyRoutes.js';
+import expiryRoutes from './routes/expiryRoutes.js';
 import { errorHandler, notFoundHandler } from './middleware/error.js';
 
 const configuredOrigins = env.CLIENT_ORIGIN.split(',')
@@ -84,6 +85,7 @@ export const createApp = () => {
   app.use('/api/auth', authRoutes);
   app.use('/api/products', requireAuth, productRoutes);
   app.use('/api/analysis', requireAuth, analysisRoutes);
+  app.use('/api/expiry', requireAuth, expiryRoutes);
   app.use('/api/history', requireAuth, historyRoutes);
 
   app.use(notFoundHandler);

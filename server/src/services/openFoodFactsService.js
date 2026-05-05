@@ -16,13 +16,22 @@ const mapProduct = (rawProduct, barcode) => ({
   barcode,
   productName: rawProduct.product_name || 'Unknown Product',
   brands: rawProduct.brands || null,
+  categories: rawProduct.categories || null,
+  quantity: rawProduct.quantity || null,
+  storageConditions:
+    rawProduct.conservation_conditions_en ||
+    rawProduct.conservation_conditions ||
+    null,
   ingredients:
     rawProduct.ingredients_text_en ||
     rawProduct.ingredients_text ||
     (rawProduct.ingredients || []).map((i) => i.text).join(', ') ||
     null,
   nutritionalValues: pickNutrients(rawProduct.nutriments),
-  expiryInfo: rawProduct.expiration_date || (rawProduct.expiration_date_tags || []).join(', ') || null,
+  expiryInfo:
+    rawProduct.expiration_date ||
+    (rawProduct.expiration_date_tags || []).join(', ') ||
+    null,
   imageUrl: rawProduct.image_front_url || rawProduct.image_url || null
 });
 

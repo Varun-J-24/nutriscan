@@ -1,5 +1,4 @@
 import Tesseract from 'tesseract.js';
-import { classifyExpiry, extractExpiryDate } from '../utils/expiry.js';
 
 const frameToBlob = (videoEl) => {
   const canvas = document.createElement('canvas');
@@ -32,12 +31,12 @@ export const detectExpiryFromVideo = async (videoEl) => {
   });
 
   const rawText = result?.data?.text || '';
-  const expiryDate = extractExpiryDate(rawText);
-  const classification = classifyExpiry(expiryDate);
+  const ocrConfidence = typeof result?.data?.confidence === 'number'
+    ? Number((result.data.confidence / 100).toFixed(2))
+    : null;
 
   return {
     rawText,
-    expiryDate: expiryDate ? expiryDate.toISOString().split('T')[0] : null,
-    ...classification
+    ocrConfidence
   };
 };

@@ -17,7 +17,7 @@ export default function SettingsPage() {
           <button
             type="button"
             onClick={clearFavorites}
-            className="mt-3 rounded-lg border px-3 py-2 text-sm"
+            className="mt-3 w-full rounded-lg border px-3 py-2 text-sm sm:w-auto"
             style={{ borderColor: 'var(--border)', color: 'var(--teal)' }}
           >
             Clear Favorites
@@ -30,7 +30,7 @@ export default function SettingsPage() {
           <button
             type="button"
             onClick={loadHistory}
-            className="mt-3 rounded-lg border px-3 py-2 text-sm"
+            className="mt-3 w-full rounded-lg border px-3 py-2 text-sm sm:w-auto"
             style={{ borderColor: 'var(--border)', color: 'var(--teal)' }}
           >
             Refresh History
