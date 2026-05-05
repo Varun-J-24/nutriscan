@@ -42,6 +42,18 @@ export const createApiClient = (getIdToken) => {
       request('/history', {
         method: 'POST',
         body: JSON.stringify(entry)
+      }),
+    getGamificationProfile: () => request('/gamification/profile'),
+    processGamificationScan: (body) =>
+      request('/gamification/process-scan', {
+        method: 'POST',
+        body: JSON.stringify(body)
+      }),
+    getRewards: () => request('/gamification/rewards'),
+    redeemReward: (rewardId) =>
+      request('/gamification/redeem', {
+        method: 'POST',
+        body: JSON.stringify({ rewardId })
       })
   };
 };

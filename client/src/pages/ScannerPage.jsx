@@ -1,7 +1,8 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useBarcodeScanner } from '../hooks/useBarcodeScanner.js';
 import { detectExpiryFromVideo } from '../services/ocrService.js';
 import { useScanHistory } from '../hooks/useScanHistory.js';
+import { useGamification } from '../hooks/useGamification.js';
 import { badgeClass, scoreTone, severityClass, statusToProgress } from '../utils/dashboardUi.js';
 
 const defaultExpiryState = {
@@ -36,6 +37,16 @@ export default function ScannerPage() {
   const [ocrError, setOcrError] = useState('');
 
   const { api, loadHistory, favoriteSet, toggleFavorite } = useScanHistory();
+  const { processScan: processGamification } = useGamification();
+
+  const [pointsToast, setPointsToast] = useState(null);
+
+  // Auto-dismiss points toast after 5s
+  useEffect(() => {
+    if (!pointsToast) return;
+    const timer = setTimeout(() => setPointsToast(null), 5000);
+    return () => clearTimeout(timer);
+  }, [pointsToast]);
 
   const fetchProduct = useCallback(
     async (code) => {
@@ -119,6 +130,14 @@ export default function ScannerPage() {
       });
 
       await loadHistory();
+
+      // ── Gamification: process the scan for points ──
+      if (product.barcode && response.analysis.healthScore != null) {
+        const gamResult = await processGamification(product.barcode, response.analysis.healthScore);
+        if (gamResult) {
+          setPointsToast(gamResult);
+        }
+      }
     } catch (error) {
       setProductError(error.message || 'Analysis failed.');
     } finally {
@@ -163,6 +182,30 @@ export default function ScannerPage() {
 
   return (
     <>
+      {/* ── Points Earned Toast ── */}
+      {pointsToast && (
+        <div className="points-toast ui-fade-in soft-card fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-2xl border px-5 py-4 shadow-2xl" style={{ borderColor: 'var(--border)' }}>
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: 'var(--green-soft)' }}>
+            <span className="text-xl">⚡</span>
+          </div>
+          <div>
+            <p className="text-sm font-bold tabular-nums" style={{ color: 'var(--ink)' }}>+{pointsToast.pointsEarned + (pointsToast.achievementBonus || 0)} Points</p>
+            <p className="text-[10px]" style={{ color: 'var(--muted)' }}>
+              Base {pointsToast.breakdown?.base} × {pointsToast.breakdown?.streakMultiplier}x streak
+              {pointsToast.breakdown?.discoveryBonus > 0 ? ` + ${pointsToast.breakdown.discoveryBonus} discovery` : ''}
+            </p>
+            {pointsToast.newBadges?.length > 0 && (
+              <p className="mt-1 text-xs font-semibold" style={{ color: 'var(--green)' }}>
+                🏆 {pointsToast.newBadges.map((b) => `${b.icon} ${b.name}`).join(', ')}
+              </p>
+            )}
+            {pointsToast.leveledUp && (
+              <p className="mt-0.5 text-xs font-bold" style={{ color: 'var(--teal)' }}>🎉 Level Up! → {pointsToast.levelTitle}</p>
+            )}
+          </div>
+          <button type="button" onClick={() => setPointsToast(null)} className="ml-2 text-xs" style={{ color: 'var(--muted)' }}>✕</button>
+        </div>
+      )}
       <section className="soft-card rounded-2xl p-4 md:p-5">
         <div className="grid gap-4 md:grid-cols-[1.3fr,0.9fr] md:items-center">
           <div>

@@ -8,6 +8,7 @@ import ScannerPage from './pages/ScannerPage.jsx';
 import HistoryPage from './pages/HistoryPage.jsx';
 import AlertsPage from './pages/AlertsPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
+import RewardsPage from './pages/RewardsPage.jsx';
 import Preloader from './components/Preloader.jsx';
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route path="scanner" element={<ScannerPage />} />
         <Route path="history" element={<HistoryPage />} />
+        <Route path="rewards" element={<RewardsPage />} />
         <Route path="alerts" element={<AlertsPage />} />
         <Route path="settings" element={<SettingsPage />} />
       </Route>

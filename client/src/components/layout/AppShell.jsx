@@ -7,6 +7,7 @@ const navItems = [
   { label: 'Home', to: '/dashboard' },
   { label: 'Scanner', to: '/dashboard/scanner' },
   { label: 'History', to: '/dashboard/history' },
+  { label: 'Rewards', to: '/dashboard/rewards' },
   { label: 'Alerts', to: '/dashboard/alerts' },
   { label: 'Settings', to: '/dashboard/settings' }
 ];
@@ -26,7 +27,7 @@ export default function AppShell() {
   return (
     <div className="min-h-screen p-3 md:p-5 lg:p-6">
       <div className="mx-auto max-w-[1400px]">
-        <header className="section-top-nav sticky top-3 z-40 mb-4 rounded-[28px] border p-3 sm:p-4 md:mb-5 md:rounded-[32px]">
+        <header className="section-top-nav sticky top-3 z-40 mx-auto mb-4 max-w-5xl rounded-[28px] border p-3 sm:p-4 md:mb-5 md:rounded-[32px]">
           <div className="grid gap-3 lg:grid-cols-[260px,1fr,auto] lg:items-center">
             <div>
               <img
