@@ -11,7 +11,7 @@ const envSchema = z.object({
   OPENAI_MODEL: z.string().default('gpt-4.1-mini'),
   JWT_SECRET: z.string().default('nutriscan-dev-secret-change-me'),
   JWT_EXPIRES_IN: z.string().default('7d'),
-  FIREBASE_PROJECT_ID: z.string().optional(),
+  FIREBASE_PROJECT_ID: z.string().default('nutriscan-26cfc'),
   FIREBASE_CLIENT_EMAIL: z.string().optional(),
   FIREBASE_PRIVATE_KEY: z.string().optional()
 });
