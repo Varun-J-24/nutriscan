@@ -10,20 +10,9 @@ import {
   signInWithPopup,
   signOut
 } from 'firebase/auth';
+import { resolveApiBaseUrl } from '../utils/apiBaseUrl.js';
 
-const resolveApiBaseUrl = () => {
-  const raw = (import.meta.env.VITE_API_BASE_URL || '').trim();
-  const normalized = raw || '/api';
-
-  // Production should never call localhost auth endpoints.
-  if (!import.meta.env.DEV && /localhost|127\.0\.0\.1/i.test(normalized)) {
-    return '/api';
-  }
-
-  return normalized.replace(/\/$/, '');
-};
-
-const API_BASE_URL = resolveApiBaseUrl();
+const API_BASE_URL = resolveApiBaseUrl(import.meta.env.VITE_API_BASE_URL, import.meta.env.DEV);
 const LOCAL_SESSION_KEY = 'nutriscan_local_session';
 
 const isPlaceholder = (value = '') => {
