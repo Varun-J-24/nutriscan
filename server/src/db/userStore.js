@@ -1,8 +1,17 @@
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 import { JSONFilePreset } from 'lowdb/node';
+import fs from 'node:fs';
 
-const USERS_FILE = path.resolve(process.cwd(), 'data', 'users.json');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const DATA_DIR = path.resolve(__dirname, '..', '..', 'data');
+
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const dbPromise = JSONFilePreset(USERS_FILE, { users: [] });
 
 const normalizeEmail = (email) => email.trim().toLowerCase();

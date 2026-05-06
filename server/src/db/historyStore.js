@@ -1,7 +1,16 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { JSONFilePreset } from 'lowdb/node';
+import fs from 'node:fs';
 
-const HISTORY_FILE = path.resolve(process.cwd(), 'data', 'history.json');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const DATA_DIR = path.resolve(__dirname, '..', '..', 'data');
+
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+const HISTORY_FILE = path.join(DATA_DIR, 'history.json');
 const dbPromise = JSONFilePreset(HISTORY_FILE, { histories: {} });
 
 export const getHistoryByUser = async (uid) => {

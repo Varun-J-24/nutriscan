@@ -1,7 +1,16 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { JSONFilePreset } from 'lowdb/node';
+import fs from 'node:fs';
 
-const GAMIFICATION_FILE = path.resolve(process.cwd(), 'data', 'gamification.json');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const DATA_DIR = path.resolve(__dirname, '..', '..', 'data');
+
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+const GAMIFICATION_FILE = path.join(DATA_DIR, 'gamification.json');
 const dbPromise = JSONFilePreset(GAMIFICATION_FILE, { profiles: {} });
 
 const defaultProfile = () => ({
