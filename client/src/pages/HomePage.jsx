@@ -149,7 +149,6 @@ export default function HomePage() {
               Multipage Dashboard
             </p>
             <h2 className="mt-2 text-xl font-semibold" style={{ color: 'var(--ink)' }}>
-              Navigate scanner, history, alerts, and settings from separate pages
             </h2>
             <p className="mt-2 text-sm" style={{ color: 'var(--muted)' }}>
               This keeps workflows focused and easier to maintain.
