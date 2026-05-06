@@ -28,6 +28,11 @@ const mapProduct = (rawProduct, barcode) => ({
     (rawProduct.ingredients || []).map((i) => i.text).join(', ') ||
     null,
   nutritionalValues: pickNutrients(rawProduct.nutriments),
+  nutriscoreGrade:
+    rawProduct.nutriscore_grade ||
+    (rawProduct.nutrition_grades_tags || [])[0] ||
+    null,
+  novaGroup: rawProduct.nova_group ?? rawProduct.nova_groups ?? null,
   expiryInfo:
     rawProduct.expiration_date ||
     (rawProduct.expiration_date_tags || []).join(', ') ||

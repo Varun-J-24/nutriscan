@@ -21,7 +21,9 @@ const analyzeSchema = z.object({
       fiber: z.number().nullable().optional(),
       sodium: z.number().nullable().optional(),
       salt: z.number().nullable().optional()
-    })
+    }),
+    nutriscoreGrade: z.string().nullable().optional(),
+    novaGroup: z.number().nullable().optional()
   }),
   expiryStatus: z.enum(['Expired', 'Expiring Soon', 'Safe', 'Unknown']).default('Unknown')
 });

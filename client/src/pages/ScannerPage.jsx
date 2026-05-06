@@ -158,7 +158,7 @@ export default function ScannerPage() {
     }
   };
 
-  const insightItems = analysis?.highlightedIngredients || [];
+  const insightItems = analysis?.ingredientAnalysis || [];
   const riskSummary = useMemo(
     () =>
       insightItems.reduce(
@@ -316,17 +316,38 @@ export default function ScannerPage() {
               </div>
 
               <div className="mt-3 rounded-xl border p-3" style={{ borderColor: 'var(--border)' }}>
-                <p className="text-sm font-semibold" style={{ color: 'var(--ink)' }}>AI Summary</p>
-                <p className="mt-2 text-sm leading-6" style={{ color: 'var(--muted)' }}>
-                  {analysis?.simplifiedExplanation || 'Run AI analysis to see easy-to-read health insights and warnings.'}
+                <p className="text-sm font-semibold" style={{ color: 'var(--ink)' }}>AI Summary & Verdict</p>
+                <p className="mt-2 text-sm font-medium" style={{ color: 'var(--ink)' }}>
+                  {analysis?.simplifiedExplanation || 'Run AI analysis for health insights.'}
                 </p>
+                <p className="mt-2 text-xs leading-5" style={{ color: 'var(--muted)' }}>
+                  {analysis?.detailedBreakdown}
+                </p>
+                
+                {analysis?.suitability && (
+                  <div className="mt-3 grid gap-2 text-[10px] sm:grid-cols-3">
+                    <div className="rounded-lg border p-2" style={{ borderColor: 'var(--border)' }}>
+                      <p className="font-bold uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Diabetic</p>
+                      <p className="mt-1" style={{ color: 'var(--ink)' }}>{analysis.suitability.diabetic}</p>
+                    </div>
+                    <div className="rounded-lg border p-2" style={{ borderColor: 'var(--border)' }}>
+                      <p className="font-bold uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Fitness</p>
+                      <p className="mt-1" style={{ color: 'var(--ink)' }}>{analysis.suitability.fitness}</p>
+                    </div>
+                    <div className="rounded-lg border p-2" style={{ borderColor: 'var(--border)' }}>
+                      <p className="font-bold uppercase tracking-wider" style={{ color: 'var(--muted)' }}>General</p>
+                      <p className="mt-1" style={{ color: 'var(--ink)' }}>{analysis.suitability.general}</p>
+                    </div>
+                  </div>
+                )}
+
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {(analysis?.highlightedIngredients || []).slice(0, 5).map((item) => (
+                  {(analysis?.ingredientAnalysis || []).map((item) => (
                     <span
-                      key={`${item.label}-${item.severity}`}
-                      className={`rounded-full border px-3 py-1 text-xs font-medium ${severityClass[item.color] || 'bg-[color:var(--surface-2)] text-[color:var(--muted)] border-[color:var(--border)]'}`}
+                      key={item.name}
+                      className={`rounded-full border px-3 py-1 text-[10px] font-medium ${severityClass[item.color] || 'bg-[color:var(--surface-2)] text-[color:var(--muted)] border-[color:var(--border)]'}`}
                     >
-                      {item.label}
+                      {item.name}
                     </span>
                   ))}
                 </div>
@@ -340,75 +361,97 @@ export default function ScannerPage() {
 
       <section className="soft-card rounded-2xl p-4 md:p-5">
         <h3 className="text-lg font-semibold" style={{ color: 'var(--ink)' }}>Ingredient Safety Breakdown</h3>
-        <div className="mt-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-          <div className="relative h-28 w-28 rounded-full" style={chartStyle}>
-            <div className="absolute inset-3 rounded-full bg-white" />
+        
+        {/* Nutrition Highlights Row */}
+        {analysis?.nutritionHighlights?.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-3">
+            {analysis.nutritionHighlights.map((hl) => (
+              <div key={hl.nutrient} className={`flex min-w-[100px] flex-col rounded-xl border p-2 ${severityClass[hl.color]}`}>
+                <p className="text-[10px] font-bold uppercase tracking-tighter opacity-70">{hl.nutrient}</p>
+                <p className="text-sm font-bold">{hl.value}</p>
+                <p className="text-[9px] font-medium">{hl.verdict}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-6 flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+          <div className="relative h-32 w-32 shrink-0 rounded-full" style={chartStyle}>
+            <div className="absolute inset-4 rounded-full bg-white flex items-center justify-center flex-col">
+              <span className="text-xl font-bold" style={{ color: 'var(--ink)' }}>{insightItems.length}</span>
+              <span className="text-[8px] uppercase tracking-tighter" style={{ color: 'var(--muted)' }}>Flagged Items</span>
+            </div>
           </div>
 
-          <div className="space-y-2 text-sm" style={{ color: 'var(--muted)' }}>
-            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full" style={{ background: 'var(--green)' }} />Safe ({riskSummary.safe})</p>
-            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full" style={{ background: 'var(--amber)' }} />Moderate ({riskSummary.moderate})</p>
-            <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full" style={{ background: 'var(--danger)' }} />High Risk ({riskSummary.high})</p>
+          <div className="grid flex-1 gap-4 sm:grid-cols-2">
+            <div className="space-y-2 text-sm" style={{ color: 'var(--muted)' }}>
+              <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full" style={{ background: 'var(--green)' }} />Safe ({riskSummary.safe})</p>
+              <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full" style={{ background: 'var(--amber)' }} />Moderate ({riskSummary.moderate})</p>
+              <p className="flex items-center gap-2"><span className="h-2 w-2 rounded-full" style={{ background: 'var(--danger)' }} />High Risk ({riskSummary.high})</p>
+            </div>
+            
+            <div className="rounded-xl border p-3" style={{ borderColor: 'var(--border)' }}>
+              <p className="text-xs font-semibold" style={{ color: 'var(--muted)' }}>Expiry Timeline</p>
+              <div className="relative mt-4 h-1 rounded-full bg-gradient-to-r from-[color:var(--green)] via-[color:var(--amber)] to-[color:var(--danger)]">
+                <span
+                  className="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full border-2 shadow-sm"
+                  style={{ background: 'var(--teal)', left: `${statusToProgress[expiry.status]}%`, borderColor: 'var(--surface)' }}
+                />
+              </div>
+              <div className="mt-3 flex justify-between text-[10px]" style={{ color: 'var(--muted)' }}>
+                <span>Safe</span>
+                <span>Expired</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="mt-4 rounded-xl border p-3" style={{ borderColor: 'var(--border)' }}>
-          <p className="text-sm" style={{ color: 'var(--muted)' }}>Expiry Timeline</p>
-          <div className="relative mt-6 h-1 rounded-full bg-gradient-to-r from-[color:var(--green)] via-[color:var(--amber)] to-[color:var(--danger)]">
-            <span
-              className="absolute top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border-2"
-              style={{ background: 'var(--teal)', left: `${statusToProgress[expiry.status]}%`, borderColor: 'var(--surface)' }}
-            />
+        {/* Detailed Ingredient Cards */}
+        {insightItems.length > 0 ? (
+          <div className="mt-6 grid gap-3 md:grid-cols-2">
+            {insightItems.map((item) => (
+              <div key={item.name} className="flex flex-col rounded-xl border p-3" style={{ borderColor: 'var(--border)' }}>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold" style={{ color: 'var(--ink)' }}>{item.name}</span>
+                  <span className={`rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase ${severityClass[item.color]}`}>
+                    {item.severity}
+                  </span>
+                </div>
+                <p className="mt-2 text-xs leading-5" style={{ color: 'var(--muted)' }}>{item.explanation}</p>
+                <div className="mt-3 rounded-lg bg-[color:var(--surface-2)] p-2">
+                  <p className="text-[9px] font-bold uppercase tracking-wider" style={{ color: 'var(--teal)' }}>Recommendation</p>
+                  <p className="mt-1 text-[10px]" style={{ color: 'var(--ink)' }}>{item.recommendation}</p>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="mt-4 grid gap-2 sm:grid-cols-2">
-            <p className="text-xs" style={{ color: 'var(--muted)' }}>
-              Expiry Date: <span style={{ color: 'var(--ink)' }}>{expiry.expiryDate || 'Not detected'}</span>
-            </p>
-            <p className="text-xs" style={{ color: 'var(--muted)' }}>
-              Days Remaining: <span style={{ color: 'var(--ink)' }}>{expiry.daysRemaining ?? 'Unknown'}</span>
-            </p>
-            <p className="text-xs" style={{ color: 'var(--muted)' }}>
-              Confidence: <span style={{ color: 'var(--ink)' }}>{Math.round((expiry.confidence || 0) * 100)}%</span>
-            </p>
-            <p className="text-xs" style={{ color: 'var(--muted)' }}>
-              Source: <span style={{ color: 'var(--ink)' }}>{expiry.source === 'ocr' ? 'OCR label' : expiry.source === 'product_meta' ? 'Product metadata' : 'Not available'}</span>
-            </p>
-            <p className="text-xs sm:col-span-2" style={{ color: 'var(--muted)' }}>
-              Reason: <span style={{ color: 'var(--ink)' }}>{expiry.reason}</span>
-            </p>
-            {expiry.storageAdvice ? (
-              <p className="text-xs sm:col-span-2" style={{ color: 'var(--muted)' }}>
-                Storage Advice: <span style={{ color: 'var(--ink)' }}>{expiry.storageAdvice}</span>
-              </p>
-            ) : null}
-            {expiry.ocrConfidence !== null ? (
-              <p className="text-xs sm:col-span-2" style={{ color: 'var(--muted)' }}>
-                OCR Read Quality: <span style={{ color: 'var(--ink)' }}>{Math.round((expiry.ocrConfidence || 0) * 100)}%</span>
-              </p>
-            ) : null}
+        ) : (
+          <div className="mt-6 flex flex-col items-center justify-center rounded-xl border border-dashed py-8" style={{ borderColor: 'var(--border)' }}>
+            <span className="text-3xl">✅</span>
+            <p className="mt-2 text-sm font-medium" style={{ color: 'var(--ink)' }}>No concerning ingredients detected</p>
+            <p className="text-xs" style={{ color: 'var(--muted)' }}>This product appears to have a clean ingredient label.</p>
           </div>
-        </div>
+        )}
 
-        <div className="mt-3 rounded-xl border p-3" style={{ borderColor: 'var(--border)' }}>
-          <p className="text-sm font-semibold" style={{ color: 'var(--ink)' }}>Expiry Recommendations</p>
-          {expiry.actions?.length ? (
-            <ul className="mt-2 space-y-1 text-sm" style={{ color: 'var(--muted)' }}>
-              {expiry.actions.map((action) => (
-                <li key={action}>- {action}</li>
-              ))}
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border p-3" style={{ borderColor: 'var(--border)' }}>
+            <p className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Expiry Detail</p>
+            <div className="mt-2 space-y-1 text-xs">
+              <p style={{ color: 'var(--muted)' }}>Date: <span className="font-medium" style={{ color: 'var(--ink)' }}>{expiry.expiryDate || 'N/A'}</span></p>
+              <p style={{ color: 'var(--muted)' }}>Confidence: <span className="font-medium" style={{ color: 'var(--ink)' }}>{Math.round((expiry.confidence || 0) * 100)}%</span></p>
+              <p style={{ color: 'var(--muted)' }}>Source: <span className="font-medium" style={{ color: 'var(--ink)' }}>{expiry.source}</span></p>
+            </div>
+          </div>
+          
+          <div className="rounded-xl border p-3" style={{ borderColor: 'var(--border)' }}>
+            <p className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--muted)' }}>Actions</p>
+            <ul className="mt-2 space-y-1 text-[10px]" style={{ color: 'var(--muted)' }}>
+              {expiry.actions?.length ? expiry.actions.map(a => <li key={a}>• {a}</li>) : <li>No actions suggested</li>}
             </ul>
-          ) : (
-            <p className="mt-2 text-sm" style={{ color: 'var(--muted)' }}>
-              Run Detect Expiry to get actionable recommendations.
-            </p>
-          )}
-          {expiry.extractedCandidates?.length ? (
-            <p className="mt-3 text-xs" style={{ color: 'var(--muted)' }}>
-              Candidate dates found: {expiry.extractedCandidates.map((item) => `${item.date} (${Math.round(item.confidence * 100)}%)`).join(', ')}
-            </p>
-          ) : null}
+          </div>
         </div>
       </section>
+
     </>
   );
 }
